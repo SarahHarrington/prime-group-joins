@@ -16,9 +16,17 @@ ON "warehouse"."id" = "warehouse_product"."warehouse_id"
 WHERE "warehouse_product"."product_id" = 6;
 
 --5. Get the number of orders for each customer. NOTE: It is OK if those without orders are not included in results.
+--DIDN'T WORK
 SELECT count(*) FROM "orders"
 JOIN "addresses" ON "addresses"."id" = "orders"."address_id"
 JOIN  "customers" ON "customers"."id" = "addresses"."customer_id";
+
+--CLASS SOLVE
+SELECT "customers".*, count("orders"."id")
+FROM "customers" JOIN "addresses" 
+ON "customers"."id" = "addresses"."customer_id"
+JOIN "orders" ON "addresses"."id" = "orders"."address_id"
+GROUP BY "customers"."id";
 
 --6. How many customers do we have?
 SELECT count(*) FROM "customers";
